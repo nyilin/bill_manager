@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Dynamically append arbitrary number of inputs (Shiny) from \n# https://gist.github.com/ncarchedi/2ef57039c238ef074ee7\nlibrary(shiny)\nlibrary(DT)\nsource(\"functions.R\")\n\nshinyServer(function(input, output) {\n  get_database <- eventReactive(input$update_view, {\n    database <- load_database()\n    if (!is.null(database)) {\n      database[with(database, \n                    order(date_input, date_pay, row_id, decreasing = TRUE)), ]\n    } else {\n      database\n    }\n  })\n  output$view_data <- DT::renderDataTable({\n    DT::datatable(get_database(), rownames = FALSE)\n  })\n  \n  observeEvent(input$add_entry_confirm, {\n    entry <- form_entry(item_desc = input$item_desc, date_pay = input$date_pay, \n                        person_pay = input$person_pay, \n                        person_share = input$person_share, \n                        amount = input$amount)\n    add_entry(entry)\n    showNotification(\n      \"New entry added. Please click on 'view bills' for an updated view.\", \n      type = \"message\"\n    )\n  })\n  \n  observeEvent(input$clear_balance_confirm, {\n    amount_cleared <- as.numeric(input$amount_cleared)\n    msg <- clear_balance(amount_cleared)\n    showNotification(\n      paste(msg, \"Please click on 'view bills' for an updated view.\"), \n      type = \"message\"\n    )\n  })\n  \n  observeEvent(input$display_balance, {\n    showNotification(display_balance(gl_to_pay_nyl = calculate()), \n                     type = \"message\")\n  })\n  \n  observeEvent(input$delete_entry_confirm, {\n    delete_entry(input$row_id)\n    showNotification(\n      paste(\"Entry with row id\", input$row_id, \"is deleted from database.\", \n            \"Please click on 'view bills' for an updated view.\"), \n      type = \"message\"\n    )\n  })\n})\n",
+    "created" : 1501333783988.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "30188875",
+    "id" : "1254E1C4",
+    "lastKnownWriteTime" : 1501339907,
+    "last_content_update" : 1501339907608,
+    "path" : "~/Google Drive/Projects/Active/BillManager/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Dynamically append arbitrary number of inputs (Shiny) from \n# https://gist.github.com/ncarchedi/2ef57039c238ef074ee7\nlibrary(shiny)\n\nshinyUI(pageWithSidebar(\n  \n  # Application title\n  headerPanel(\"Bill manager\"),\n  \n  # Sidebar with a slider input for number of bins\n  sidebarPanel(\n    actionButton(\"update_view\", label = \"View bills\"), \n    actionButton(\"display_balance\", label = \"Show outstanding balance\"), \n    hr(), \n    actionButton(\"clear_balance\", label = \"Clear outstanding balance\"), \n    conditionalPanel(\n      \"input.clear_balance == 1\", \n      textInput(\"amount_cleared\", \n                label = \"Amount of outstanding balance cleared:\", \n                value = \"All cleared\"), \n      actionButton(\"clear_balance_confirm\", label = \"Confirm amount cleared\")\n    ), \n    hr(), \n    actionButton(\"add_entry\", label = \"Add new entry\"), \n    conditionalPanel(\n      \"input.add_entry == 1\", \n      textInput(\"item_desc\", label = \"Item description:\", value = \"\"), \n      dateInput(\"date_pay\", label = \"Date of payment:\", value = Sys.Date()), \n      selectInput(\"person_pay\", label = \"Who paid\", \n                  choices = c(\"Ning Yilin\", \"Ginny Li\")), \n      selectInput(\"person_share\", label = \"Who should bear the cost\", \n                  choices = c(\"both\", \"Ning Yilin\", \"Ginny Li\")), \n      numericInput(\"amount\", label = \"Payment amount:\", value = 0, min = 0), \n      actionButton(\"add_entry_confirm\", label = \"Confirm to add entry\")\n    ),\n    hr(), \n    actionButton(\"delete_entry\", label = \"Delete entry\"), \n    conditionalPanel(\n      \"input.delete_entry == 1\", \n      p(\"Please use this function with caution.\"), \n      numericInput(\"row_id\", label = \"Row id of entry to delete:\", \n                   value = 1, min = 1), \n      actionButton(\"delete_entry_confirm\", label = \"Confirm to delete entry\")\n    )\n  ),\n  \n  # Show a plot of the generated distribution\n  mainPanel(\n    DT::dataTableOutput(\"view_data\"), \n    textOutput(\"balance\")\n  )\n))\n",
+    "created" : 1501333788979.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "121521363",
+    "id" : "40F45959",
+    "lastKnownWriteTime" : 1501339406,
+    "last_content_update" : 1501339406582,
+    "path" : "~/Google Drive/Projects/Active/BillManager/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

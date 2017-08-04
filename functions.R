@@ -138,7 +138,7 @@ display_balance <- function(gl_to_pay_nyl) {
     "There is no outstanding balance. We are good."
   }
 }
-clear_balance <- function(amount_cleared = NULL) {
+clear_balance <- function(amount_cleared = "All cleared") {
   # Check whether there exist any records
   database <- load_database()
   save(
@@ -159,7 +159,7 @@ clear_balance <- function(amount_cleared = NULL) {
   save(database, file = DataFile)
   # Check whether there is any left_over
   gl_to_pay_nyl <- calculate()
-  if (is.null(amount_cleared)) {
+  if (amount_cleared == "All cleared") {
     amount_cleared <- gl_to_pay_nyl
   } else {
     if (amount_cleared < abs(gl_to_pay_nyl)) {
